@@ -1,0 +1,90 @@
+# -*- coding: utf-8 -*-
+"""
+Spyder Editor
+
+This is a temporary script file.
+"""
+#Primero se importan las librerías que utilizaremos
+#Esta es para poder hacer las busquedas dentro de cada csv
+import re
+#Aquí utilizamos pandas para poder concatenar todas los archivos creados más adelante
+import pandas as pd
+
+i=0
+s=[1,2,3,4,5,6,7]
+
+#Creamos un for para de 1 a 7 para poder leer cada uno de los archivos de forma automática
+for i in s:
+    #En el caso de los archivos del 2020, por el hecho de veir separados en otros 8 archivos
+    #de nuevo uyilizamos otro for, en el cual leerá los 8 archivos de este año
+    if i==6:
+        j=0
+        a=[1,2,3,4,5,6,7,8]
+        for j in a:
+            #Aquí le damos un valor a h por cada valor obtenido de j, de esta forma podemos
+            #concatenar estas variables al link utilizado y que haga las lecturas
+            #automaticamente
+            if j==1: h="Enero"
+            elif j==2: h="Febrero"
+            elif j==3: h="Marzo"
+            elif j==4: h="Abril"
+            elif j==5: h="Mayo"
+            elif j==6: h="Junio"
+            elif j==7: h="Julio"
+            else: h="Agosto"
+            #Se agregan los path que se van a utilizar, el de le ctura y escritura, en ambas
+            #se concatena h para poder cambiar mientras cambia el valor de j
+            path="C:\\Users\\everis\\Downloads\\incidentes_viales_2020_axa\\incidentes_viales_2020-enero-agosto_axa\\Seguridad_Vial_concatenado_"+ h +"_2020.csv"
+            pathout="C:\\Users\\everis\\Desktop\\Ejercicios\\Incidentes 2020-"+str(j)+".csv"
+            #Se abre el archivo csv y se le da lectura a cada uno de ellos mientras el for está
+            #en proceso
+            with open(path,'r', encoding="utf8") as csvfile:
+                archivo=csvfile.read()
+            #Se eliminan los datos que no son necesarios en los archivos para tener una mejor estadarización
+            archivoSalida=re.sub('\\\\N','',archivo)
+            archivoSalida=re.sub('x','',archivoSalida)
+            archivoSalida=archivoSalida.lower()
+            #Aquí nos preparamos para escribir lo que se leyó con anterioridad, de la misma forma
+            #Se van dando diferentes nombres a los archivos creados
+            with open(pathout,'w', encoding='utf8') as holi:
+                holi.write(archivoSalida)
+        #Aquí es donde se hace todos los procesos que están fuera del caso del 2020
+    else:
+        #De nuevo tenemos el path de lectura y escritura concatenados con el primer for
+        path="C:\\Users\\everis\\Downloads\\incidentes_viales_20"+ str(i+14) + "_axa\\incidentes_viales_20"+ str(i+14) + "_axa.csv"
+        pathout="C:\\Users\\everis\\Desktop\\Ejercicios\\Incidentes"+str(i)+".csv"    
+        #Volvemos a abrir cada archivo para poder leerlo
+        with open(path,'r', encoding="utf8") as csvfile:
+            archivo=csvfile.read()
+        #Se hace su estandarización de nuevo para todos los archivos eliminando caracteres sobrantes
+        archivoSalida=re.sub('\\\\N','',archivo)
+        archivoSalida=re.sub('x','',archivoSalida)
+        archivoSalida=archivoSalida.lower()
+        #Se escriben los archivos al path de salida, cada uno con su nombre
+        with open(pathout,'w', encoding='utf8') as holi:
+            holi.write(archivoSalida)
+            
+#Despues de ello utilizamos pandas para poder crear un data frame de cada uno de los archivos creados
+df1=pd.read_csv('C:\\Users\\everis\\Desktop\\Ejercicios\\Incidentes1.csv')
+df2=pd.read_csv('C:\\Users\\everis\\Desktop\\Ejercicios\\Incidentes2.csv')
+df3=pd.read_csv('C:\\Users\\everis\\Desktop\\Ejercicios\\Incidentes3.csv')
+df4=pd.read_csv('C:\\Users\\everis\\Desktop\\Ejercicios\\Incidentes4.csv')
+df5=pd.read_csv('C:\\Users\\everis\\Desktop\\Ejercicios\\Incidentes5.csv')
+df6=pd.read_csv('C:\\Users\\everis\\Desktop\\Ejercicios\\Incidentes 2020-1.csv')
+df7=pd.read_csv('C:\\Users\\everis\\Desktop\\Ejercicios\\Incidentes 2020-2.csv')
+df8=pd.read_csv('C:\\Users\\everis\\Desktop\\Ejercicios\\Incidentes 2020-3.csv')
+df9=pd.read_csv('C:\\Users\\everis\\Desktop\\Ejercicios\\Incidentes 2020-4.csv')
+df10=pd.read_csv('C:\\Users\\everis\\Desktop\\Ejercicios\\Incidentes 2020-5.csv')
+df11=pd.read_csv('C:\\Users\\everis\\Desktop\\Ejercicios\\Incidentes 2020-6.csv')
+df12=pd.read_csv('C:\\Users\\everis\\Desktop\\Ejercicios\\Incidentes 2020-7.csv')
+df13=pd.read_csv('C:\\Users\\everis\\Desktop\\Ejercicios\\Incidentes 2020-8.csv')
+df14=pd.read_csv('C:\\Users\\everis\\Desktop\\Ejercicios\\Incidentes7.csv')
+#Se unen todos los dataframes creados de forma congruente
+frames=[df1,df2,df3,df4,df5,df6,df7,df8,df9,df10,df11,df12,df13,df14]
+#Se concatenan estos data frames para poder tener todo en un solo archivo
+all_csv=pd.concat(frames)
+#Creamos un nuevo path para guardar este archivo
+pathi="C:\\Users\\everis\\Desktop\\Ejercicios\\Incidentes Total.csv" 
+#Convertimos el data frame en un csv para poder utilizarlo de mejor manera
+all_csv.to_csv(pathi)
+
