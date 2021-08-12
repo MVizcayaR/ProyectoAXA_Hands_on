@@ -8,7 +8,7 @@ Ramírez Hernández Diego
 Vizcaya Rodríguez Miguel Angel
 
 Requisitos:
-Nuestrocliente AXA ha solicitado una solución tecnológica para analizar los siniestros que ha 
+Nuestro cliente AXA ha solicitado una solución tecnológica para analizar los siniestros que ha 
 registrado desde el 2015 a marzo de 2021, cada siniestro tiene una tipificación y un tipo de 
 vehículo involucrado. La información a partir del mes de Abril deberá ser cargada de manera 
 automática en la solución, este archivo incremental tendrá el mismo formato que los anteriores.
